@@ -65,7 +65,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.event.inputs.version }}
-          name: MainsailOS ${{ github.event.inputs.version }}
+          name: SimpleAFOS ${{ github.event.inputs.version }}
           body: ${{ steps.changelog.outputs.content }}
           draft: true
           prerelease: false
@@ -209,7 +209,7 @@ jobs:
       - name: "✏ Rename image"
         working-directory: ./build
         run: |
-          IMAGE="${{ env.DATE }}-MainsailOS-${{ matrix.name }}-${{ env.RELEASE_TAG }}.img"
+          IMAGE="${{ env.DATE }}-SimpleAFOS-${{ matrix.name }}-${{ env.RELEASE_TAG }}.img"
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
           mv output.img "${IMAGE}"
@@ -256,7 +256,7 @@ jobs:
 
           # set name, if it is not set
           if 'name' not in rpi_data:
-              rpi_data['name'] = "MainsailOS $VERSION$"
+              rpi_data['name'] = "SimpleAFOS $VERSION$"
 
           # replace $VERSION$ in name
           rpi_data['name'] = rpi_data['name'].replace('$VERSION$', "${{ env.RELEASE_TAG }}")

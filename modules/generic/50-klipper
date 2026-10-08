@@ -20,7 +20,7 @@ source /files/00-config
 SRC_DIR="/home/${BASE_USER}/klipper"
 ENV_DIR="/home/${BASE_USER}/klippy-env"
 
-REPO="https://github.com/Klipper3d/klipper.git"
+REPO="https://github.com/pellcorp/kalico-rpi.git"
 
 DEPS=(git \
       # Packages for python cffi
@@ -54,7 +54,7 @@ apt-get install --yes "${DEPS[@]}"
 # Add user to groups                   #
 ########################################
 
-## Make sure user pi has access to serial ports
+## Make sure the user has access to serial ports
 usermod -a -G "tty,dialout" "${BASE_USER}"
 
 ########################################
@@ -85,11 +85,8 @@ echo "Creating Virtualenv (klippy-env) ..."
 sudo -u "${BASE_USER}" virtualenv -p python3 "${ENV_DIR}"
 echo "Installing Python Dependencies ..."
 sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install -r "${SRC_DIR}"/scripts/klippy-requirements.txt
-echo "Installing NumPy in Virtualenv"
-
-# Normally klipper would use "numpy<1.26", but that version does not support
-# Python 3.13 which is now in Debian Trixie.
-sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install "numpy"
+echo "Installing Simple AF Python Dependencies ..."
+sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install -r /home/"${BASE_USER}"/pellcorp/rpi/klippy-requirements.txt
 
 ########################################
 # Return to saved directory            #

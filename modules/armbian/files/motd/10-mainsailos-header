@@ -33,9 +33,9 @@ VENDORTEMP="${VENDOR}"
 [[ -f /etc/armbian-release ]] && . /etc/armbian-release
 
 # Get MainsailOS informations
-if [[ -f /etc/mainsailos-release ]]; then
-    OS_NAME="$(cat /etc/mainsailos-release | cut -d ' ' -f1)"
-    MSOS_VERSION="$(cat /etc/mainsailos-release | cut -d ' ' -f3)"
+if [[ -f /etc/simpleafos-release ]]; then
+    OS_NAME="$(cat /etc/simpleafos-release | cut -d ' ' -f1)"
+    MSOS_VERSION="$(cat /etc/simpleafos-release | cut -d ' ' -f3)"
 fi
 
 # Keep the VENDOR from image if its defined there

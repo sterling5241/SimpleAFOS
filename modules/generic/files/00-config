@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export BASE_USER=pi
-export BASE_PASSWORD=raspberry
-export DIST_NAME=MainsailOS
+export BASE_USER=saf
+export BASE_PASSWORD=simpleaf
+export DIST_NAME=SimpleAFOS
 
 export PRINTER_DATA_DIRS="printer_data printer_data/config printer_data/comms printer_data/logs printer_data/systemd"
 export MOONRAKER_CONFIG="/home/${BASE_USER}/printer_data/config/moonraker.conf"

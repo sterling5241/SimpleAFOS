@@ -24,7 +24,7 @@ if_group_exists_run() {
 # Configuration                        #
 ########################################
 
-BASE_PASSWORD=armbian
+BASE_PASSWORD=simpleaf
 DEPS=(armbian-config avahi-daemon bash-completion iptables)
 
 apt-get install --yes "${DEPS[@]}"

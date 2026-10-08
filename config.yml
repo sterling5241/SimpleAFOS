@@ -10,8 +10,8 @@
     INIT_FORMAT: cloudinit-rpi
   special_modules: []
   rpi_json:
-    name: "MainsailOS $VERSION$ - Raspberry Pi (32-bit)"
-    description: "A port of Raspberry Pi OS with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+    name: "SimpleAFOS $VERSION$ - Raspberry Pi (32-bit)"
+    description: "A port of Raspberry Pi OS with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "pi1-32bit"
@@ -29,8 +29,8 @@
     INIT_FORMAT: cloudinit-rpi
   special_modules: []
   rpi_json:
-    name: "MainsailOS $VERSION$ - Raspberry Pi (64-bit)"
-    description: "A port of Raspberry Pi OS with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+    name: "SimpleAFOS $VERSION$ - Raspberry Pi (64-bit)"
+    description: "A port of Raspberry Pi OS with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "pi3-64bit"
@@ -51,8 +51,8 @@
   special_modules:
     - 20-opi-4lts
   rpi_json:
-    name: "MainsailOS $VERSION$ - Orange Pi 4 LTS (64-bit)"
-    description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+    name: "SimpleAFOS $VERSION$ - Orange Pi 4 LTS (64-bit)"
+    description: "A port of Armbian with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "opi4-64bit"
@@ -71,8 +71,8 @@
   special_modules:
     - 20-opi-3lts
   rpi_json:
-    name: "MainsailOS $VERSION$ - Orange Pi 3 LTS (64-bit)"
-    description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+    name: "SimpleAFOS $VERSION$ - Orange Pi 3 LTS (64-bit)"
+    description: "A port of Armbian with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "opi3-64bit"
@@ -91,8 +91,8 @@
   special_modules:
     - 20-opi-zero2
   rpi_json:
-    name: "MainsailOS $VERSION$ - Orange Pi Zero2 (64-bit)"
-    description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+    name: "SimpleAFOS $VERSION$ - Orange Pi Zero2 (64-bit)"
+    description: "A port of Armbian with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "opizero2-64bit"
@@ -111,8 +111,8 @@
   special_modules:
     - 20-opi-zero3
   rpi_json:
-    name: "MainsailOS $VERSION$ - Orange Pi Zero3 (64-bit)"
-    description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+    name: "SimpleAFOS $VERSION$ - Orange Pi Zero3 (64-bit)"
+    description: "A port of Armbian with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "opizero3-64bit"
@@ -130,8 +130,27 @@
     MOUNT_SYS: 1
     INIT_FORMAT: cloudinit
   rpi_json:
-    name: "MainsailOS $VERSION$ - BigTreeTech CB1 (64-bit)"
-    description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+    name: "SimpleAFOS $VERSION$ - BigTreeTech CB1 (64-bit)"
+    description: "A port of Armbian with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "btt_cb1-64bit"
+
+- name: armbian-btt_cb2-trixie
+  type: armbian
+  build_only: True
+  img_download_url: "https://github.com/mainsail-crew/armbian-builds/releases/latest/download/armbian-bigtreetech_cb2_trixie.img.xz"
+  img_hash_url: "https://github.com/mainsail-crew/armbian-builds/releases/latest/download/armbian-bigtreetech_cb2_trixie.img.xz.sha256"
+  env:
+    ARCH: arm64
+    DISTRO: armbian
+    IMAGE_ENLARGEROOT: 5000
+    MOUNT_PROC: 1
+    MOUNT_SYS: 1
+    INIT_FORMAT: cloudinit
+  rpi_json:
+    name: "SimpleAFOS $VERSION$ - BigTreeTech CB2 (64-bit)"
+    description: "A port of Armbian with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"
+    icon: "https://os.mainsail.xyz/rpi-imager.png"
+    devices:
+      - "btt_cb2-64bit"
