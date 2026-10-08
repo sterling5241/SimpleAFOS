@@ -56,17 +56,3 @@ fi
 
 echo "$NEW_HOSTNAME" > /etc/hostname
 sed -i -e "s@${ORG_HOSTNAME}@$NEW_HOSTNAME@g" /etc/hosts
-
-########################################
-# Install dependencies for other       #
-# Projects                             #
-########################################
-
-echo "Install dependencies for other projects"
-DEPS=( \
-    # python3-serial is needed later on for possible CAN adapters
-    python3-serial \
-    # python3-opencv is needed for moonraker-obico by obico in version 2.0
-    python3-opencv \
-)
-apt-get install -y "${DEPS[@]}"

@@ -18,7 +18,6 @@ source /files/00-config
 ########################################
 
 DOWNLOAD_URL="https://github.com/mainsail-crew/mainsail/releases/latest/download/mainsail.zip"
-CONFIG_REPO="https://github.com/mainsail-crew/mainsail-config.git"
 DEPS=(git nginx unzip)
 
 apt-get install --yes "${DEPS[@]}"
@@ -73,14 +72,6 @@ rm /home/"${BASE_USER}"/mainsail.zip
 
 gpasswd -a www-data "${BASE_USER}"
 chmod g+x /home/"${BASE_USER}"
-
-########################################
-# Setup mainsail.cfg                   #
-########################################
-
-echo "Installing mainsail.cfg"
-sudo -u "${BASE_USER}" git clone ${CONFIG_REPO} mainsail-config
-ln -sf /home/"${BASE_USER}"/mainsail-config/mainsail.cfg /home/"${BASE_USER}"/printer_data/config/mainsail.cfg
 
 ########################################
 # Return to last directory             #
