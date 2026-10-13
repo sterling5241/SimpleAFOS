@@ -23,7 +23,8 @@
   img_hash_url: "https://downloads.raspberrypi.org/raspios_lite_arm64_latest.sha256"
   env:
     ARCH: arm64
-    IMAGE_ENLARGEROOT: 6000
+    # KlipperScreen (55-klipperscreen) needs the extra room
+    IMAGE_ENLARGEROOT: 9000
     MOUNT_PROC: 1
     MOUNT_SYS: 1
     INIT_FORMAT: cloudinit-rpi
