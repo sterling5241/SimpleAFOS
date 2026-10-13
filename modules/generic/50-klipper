@@ -88,6 +88,17 @@ sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install -r "${SRC_DIR}"/scripts/klip
 echo "Installing Simple AF Python Dependencies ..."
 sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install -r /home/"${BASE_USER}"/pellcorp/rpi/klippy-requirements.txt
 
+# Klippain Shake&Tune's python packages, the slow part of its install. Simple AF
+# installs Shake&Tune itself only on corexy printers; safos-setup.sh removes
+# these again on any other printer, so what they added is recorded.
+echo "Installing Shake&Tune Python Dependencies ..."
+mkdir -p /usr/local/share/simpleafos
+sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip freeze | sort > /tmp/klippy-env.before
+sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install -r https://raw.githubusercontent.com/Frix-x/klippain-shaketune/main/requirements.txt
+sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip freeze | sort > /tmp/klippy-env.after
+comm -13 /tmp/klippy-env.before /tmp/klippy-env.after | cut -d '=' -f 1 | cut -d ' ' -f 1 > /usr/local/share/simpleafos/shaketune.packages
+rm /tmp/klippy-env.before /tmp/klippy-env.after
+
 ########################################
 # Return to saved directory            #
 ########################################

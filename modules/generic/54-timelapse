@@ -60,14 +60,6 @@ if [[ -d "${PRINTER_CONFIG_PATH}" ]]; then
 fi
 
 ########################################
-# Add config to moonraker.conf         #
-########################################
-
-if [[ -f $MOONRAKER_CONFIG ]]; then
-    cat /files/moonraker_timelapse.conf >> "$MOONRAKER_CONFIG"
-fi
-
-########################################
 # Return to last directory             #
 ########################################
 

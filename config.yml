@@ -28,7 +28,7 @@
     MOUNT_SYS: 1
     INIT_FORMAT: cloudinit-rpi
   special_modules:
-    - 50-klipperscreen-deps
+    - 55-klipperscreen
   rpi_json:
     name: "SimpleAFOS $VERSION$ - Raspberry Pi (64-bit)"
     description: "A port of Raspberry Pi OS with preinstalled Simple AF, Kalico, Moonraker, Fluidd and Mainsail for 3D printers"

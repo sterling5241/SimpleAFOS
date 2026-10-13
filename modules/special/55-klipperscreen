@@ -1,0 +1,52 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+# Only in the 64-bit Raspberry Pi image: Simple AF only runs KlipperScreen on a Pi 4 or 5
+REPO="https://github.com/KlipperScreen/KlipperScreen.git"
+
+apt-get install --yes git
+
+########################################
+# Install KlipperScreen                #
+########################################
+
+# KlipperScreen's own installer with the options pellcorp/rpi/install-klipperscreen.sh
+# uses, and START=0 as nothing can be started while the image is built. The apt
+# packages it adds are recorded so safos-setup.sh can remove them again when the
+# printer does not use KlipperScreen.
+mkdir -p /usr/local/share/simpleafos
+dpkg-query -W -f='${binary:Package}\n' | sort > /tmp/packages.before
+
+pushd /home/"${BASE_USER}" &> /dev/null || exit 1
+echo "Cloning KlipperScreen ..."
+sudo -u "${BASE_USER}" git clone ${REPO} KlipperScreen
+echo "Installing KlipperScreen ..."
+sudo -u "${BASE_USER}" -H env NETWORK=n SERVICE=y BACKEND=X START=0 ./KlipperScreen/scripts/KlipperScreen-install.sh
+popd &> /dev/null || exit 1
+
+dpkg-query -W -f='${binary:Package}\n' | sort > /tmp/packages.after
+comm -13 /tmp/packages.before /tmp/packages.after > /usr/local/share/simpleafos/klipperscreen.packages
+rm /tmp/packages.before /tmp/packages.after
+
+########################################
+# Disable service                      #
+########################################
+
+# Left disabled: safos-setup.sh --klipperscreen enables it
+systemctl_if_exists disable KlipperScreen.service

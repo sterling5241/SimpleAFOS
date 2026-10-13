@@ -25,6 +25,11 @@ if [[ "${KS_INSTALLED}" = "1" ]]; then
     SERVICES+=(KlipperScreen)
 fi
 
+### GrumpyScreen, preinstalled on the Raspberry Pi images
+if [[ -n "${DEFAULT_USER}" ]] && [[ -d "/home/${DEFAULT_USER}/grumpyscreen" ]]; then
+    SERVICES+=(grumpyscreen)
+fi
+
 log() { printf '%s\n' "$*"; }
 
 ### Step wrapper: continue-on-error with structured logging.
@@ -50,6 +55,10 @@ stop_services() {
 
 start_services() {
     for srv in "${SERVICES[@]}"; do
+        # the preinstalled screens stay off until safos-setup.sh enables one
+        if [[ "$(systemctl is-enabled "${srv}.service" 2>/dev/null)" != "enabled" ]]; then
+            continue
+        fi
         systemctl start "${srv}.service" 2>/dev/null || true
     done
 }

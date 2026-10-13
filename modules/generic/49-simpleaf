@@ -64,5 +64,6 @@ plymouth-set-default-theme -R simpleaf
 ########################################
 
 # Tells the Simple AF installer that moonraker, crowsnest and klipper are
-# already installed, so its first install keeps them instead of starting over
+# already installed, so its first install keeps them instead of starting over,
+# and lets pellcorp/rpi/safos-setup.sh run that first install
 sudo -u "${BASE_USER}" touch /home/"${BASE_USER}"/pellcorp.preinstalled
