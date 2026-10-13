@@ -45,6 +45,15 @@ make install
 popd &> /dev/null || exit 1
 
 ########################################
+# Simple AF Configuration              #
+########################################
+
+# Simple AF keeps this crowsnest instead of installing its own, so it needs
+# Simple AF's crowsnest.conf in place of the one crowsnest installs
+echo "Copying Simple AF crowsnest.conf ..."
+sudo -u "${BASE_USER}" cp /home/"${BASE_USER}"/pellcorp/rpi/crowsnest.conf /home/"${BASE_USER}"/printer_data/config/crowsnest.conf
+
+########################################
 # Enable Service                       #
 ########################################
 

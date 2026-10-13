@@ -45,3 +45,11 @@ popd &> /dev/null || exit 1
 # Same package the Simple AF installer uses for editing configs
 echo "Installing configupdater ..."
 pip install --break-system-packages /home/"${BASE_USER}"/pellcorp/packages/ConfigUpdater-3.2-py2.py3-none-any.whl
+
+########################################
+# Mark as preinstalled                 #
+########################################
+
+# Tells the Simple AF installer that moonraker, crowsnest and klipper are
+# already installed, so its first install keeps them instead of starting over
+sudo -u "${BASE_USER}" touch /home/"${BASE_USER}"/pellcorp.preinstalled
