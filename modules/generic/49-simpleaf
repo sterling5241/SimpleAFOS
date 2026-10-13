@@ -52,7 +52,9 @@ pip install --break-system-packages /home/"${BASE_USER}"/pellcorp/packages/Confi
 
 # The same steps as pellcorp/rpi/install-boot-display.sh
 echo "Installing Simple AF boot splash ..."
-apt-get install --yes plymouth unzip
+# plymouth's initramfs hook copies /etc/fonts/fonts.conf and its label plugin,
+# which Raspberry Pi OS lite does not have without fontconfig and plymouth-label
+apt-get install --yes plymouth plymouth-label fontconfig unzip
 mkdir -p /usr/share/plymouth/themes/simpleaf
 unzip -qd /usr/share/plymouth/themes/simpleaf /home/"${BASE_USER}"/pellcorp/rpi/plymouth/simpleaf.zip
 cp /home/"${BASE_USER}"/pellcorp/rpi/plymouth/simpleaf.plymouth /usr/share/plymouth/themes/simpleaf/
