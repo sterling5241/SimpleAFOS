@@ -98,8 +98,30 @@ popd &> /dev/null || exit 1
 # Copy and enable service              #
 ########################################
 
+# Simple AF's own klipper.service, set up the way pellcorp/rpi/install-klipper.sh does
 echo "Copy Service and enable it"
-cp /files/klipper.service /etc/systemd/system/klipper.service
-cp /files/klipper.env /home/"${BASE_USER}"/printer_data/systemd/klipper.env
-chown -R "${BASE_USER}":"${BASE_USER}" /home/"${BASE_USER}"/printer_data/systemd/klipper.env
+cp /home/"${BASE_USER}"/pellcorp/rpi/services/klipper.service /etc/systemd/system/klipper.service
+sed -i "s:\$HOME:/home/${BASE_USER}:g" /etc/systemd/system/klipper.service
+sed -i "s:User=pi:User=${BASE_USER}:g" /etc/systemd/system/klipper.service
 systemctl_if_exists enable klipper.service
+
+########################################
+# Build Klipper host MCU               #
+########################################
+
+# The same build as pellcorp/rpi/install-klipper.sh, which skips its own when
+# /usr/local/bin/klipper_mcu already exists
+echo "Building klipper mcu ..."
+
+# https://klipper.discourse.group/t/armbian-kernel-klipper-host-mcu-got-error-1-in-sched-setschedule/1193
+echo "kernel.sched_rt_runtime_us = -1" > /etc/sysctl.d/10-disable-rt-group-limit.conf
+
+pushd "${SRC_DIR}" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" cp .config.linux .config
+sudo -u "${BASE_USER}" make clean
+sudo -u "${BASE_USER}" make
+sudo -u "${BASE_USER}" rm .config
+cp out/klipper.elf /usr/local/bin/klipper_mcu
+cp ./scripts/klipper-mcu.service /etc/systemd/system/
+popd &> /dev/null || exit 1
+systemctl_if_exists enable klipper-mcu.service

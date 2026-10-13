@@ -47,6 +47,19 @@ echo "Installing configupdater ..."
 pip install --break-system-packages /home/"${BASE_USER}"/pellcorp/packages/ConfigUpdater-3.2-py2.py3-none-any.whl
 
 ########################################
+# Simple AF boot splash                #
+########################################
+
+# The same steps as pellcorp/rpi/install-boot-display.sh
+echo "Installing Simple AF boot splash ..."
+apt-get install --yes plymouth unzip
+mkdir -p /usr/share/plymouth/themes/simpleaf
+unzip -qd /usr/share/plymouth/themes/simpleaf /home/"${BASE_USER}"/pellcorp/rpi/plymouth/simpleaf.zip
+cp /home/"${BASE_USER}"/pellcorp/rpi/plymouth/simpleaf.plymouth /usr/share/plymouth/themes/simpleaf/
+cp /home/"${BASE_USER}"/pellcorp/rpi/plymouth/simpleaf.script /usr/share/plymouth/themes/simpleaf/
+plymouth-set-default-theme -R simpleaf
+
+########################################
 # Mark as preinstalled                 #
 ########################################
 

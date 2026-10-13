@@ -119,13 +119,14 @@ else
 fi
 
 ########################################
-# Enable passwordless sudo (build)     #
+# Enable passwordless sudo             #
 ########################################
 
 # Trixie+: raspberrypi-sys-mods no longer ships /etc/sudoers.d/010_${BASE_USER}-nopasswd
 # Bookworm and earlier: /etc/sudoers.d/010_${BASE_USER}-nopasswd may already exist
 #
-# 98-remove-passwordless-sudo reverts both cases at the end of the build.
+# It stays on: the Simple AF installer needs passwordless sudo, so
+# 98-remove-passwordless-sudo is disabled.
 RASPI_CONFIG="$(command -v raspi-config || true)"
 if [ -n "${RASPI_CONFIG}" ] && grep -q "^do_sudo_pass" "${RASPI_CONFIG}"; then
     SUDO_USER="${BASE_USER}" raspi-config nonint do_sudo_pass 1

@@ -39,7 +39,12 @@ passwd -d root
 passwd -l root
 
 ########################################
-# Remove passwordless sudo access      #
+# Keep passwordless sudo access        #
 ########################################
 
+# The Simple AF installer needs passwordless sudo, so it stays on. It moves
+# from /etc/sudoers to the sudoers.d file the user rename (prerename) moves
+# along with the user.
 sed -i '/'"${BASE_USER}"' ALL=(ALL:ALL) NOPASSWD:ALL/d' /etc/sudoers
+echo "${BASE_USER} ALL=(ALL:ALL) NOPASSWD:ALL" > "/etc/sudoers.d/010_${BASE_USER}-nopasswd"
+chmod 0440 "/etc/sudoers.d/010_${BASE_USER}-nopasswd"

@@ -26,16 +26,20 @@ apt-get install --yes "${DEPS[@]}"
 # Config Webserver                     #
 ########################################
 
+# Simple AF's own nginx sites, set up the way pellcorp/rpi/install-nginx.sh does:
+# fluidd is the default UI on port 80 (and 4408), mainsail is on 4409
+NGINX_SRC="/home/${BASE_USER}/pellcorp/rpi/nginx"
+
 echo "Remove the default site"
 rm /etc/nginx/sites-enabled/default
 
 echo "Copy the nginx configurations"
-cp /files/mainsail-nginx/mainsail /etc/nginx/sites-available/mainsail
-cp /files/mainsail-nginx/common_vars.conf /etc/nginx/conf.d/common_vars.conf
-cp /files/mainsail-nginx/upstreams.conf /etc/nginx/conf.d/upstreams.conf
-
-echo "Enable the site"
-ln -s /etc/nginx/sites-available/mainsail /etc/nginx/sites-enabled/
+cp "${NGINX_SRC}"/upstreams.conf /etc/nginx/conf.d/upstreams.conf
+cp "${NGINX_SRC}"/common_vars.conf /etc/nginx/conf.d/common_vars.conf
+cp "${NGINX_SRC}"/fluidd /etc/nginx/sites-enabled/fluidd
+sed -i "s:\$HOME:/home/${BASE_USER}:g" /etc/nginx/sites-enabled/fluidd
+cp "${NGINX_SRC}"/mainsail /etc/nginx/sites-enabled/mainsail
+sed -i "s:\$HOME:/home/${BASE_USER}:g" /etc/nginx/sites-enabled/mainsail
 
 ########################################
 # Modify Logrotate for nginx           #
@@ -44,11 +48,8 @@ ln -s /etc/nginx/sites-available/mainsail /etc/nginx/sites-enabled/
 echo "Modify logrotate cycle from 14d to 2d"
 sudo sed -i 's/rotate 14/rotate 2/' /etc/logrotate.d/nginx
 
+# Simple AF's sites turn nginx logging off, so there are no log files to link
 create_user_directories
-
-echo "Linking log files"
-ln -s /var/log/nginx/mainsail-access.log /home/"${BASE_USER}"/printer_data/logs/mainsail-access.log
-ln -s /var/log/nginx/mainsail-error.log /home/"${BASE_USER}"/printer_data/logs/mainsail-error.log
 
 ########################################
 # Switch to BASE_USER home directory   #

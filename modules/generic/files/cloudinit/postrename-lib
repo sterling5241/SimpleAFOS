@@ -60,6 +60,14 @@ change_www_root() {
         sed -i "s|/home/@BASE_USER@/mainsail|/home/${DEFAULT_USER}/mainsail|g" \
             /etc/nginx/sites-available/mainsail
     fi
+    # Simple AF's sites, as pellcorp/rpi/install-nginx.sh sets them up
+    local site
+    for site in fluidd mainsail; do
+        if [[ -f "/etc/nginx/sites-enabled/${site}" && ! -L "/etc/nginx/sites-enabled/${site}" ]]; then
+            sed -i "s|/home/@BASE_USER@/${site}|/home/${DEFAULT_USER}/${site}|g" \
+                "/etc/nginx/sites-enabled/${site}"
+        fi
+    done
 }
 
 ### change username in service files

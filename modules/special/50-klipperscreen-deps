@@ -1,0 +1,31 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+########################################
+# Configuration                        #
+########################################
+
+# The packages KlipperScreen's own KlipperScreen-install.sh installs for the
+# X11 backend Simple AF uses (BACKEND=X); Simple AF only installs KlipperScreen
+# itself on a Pi 4 or 5, so this is only in the 64-bit Raspberry Pi image
+XSERVER=(xinit xinput x11-xserver-utils xserver-xorg-input-evdev xserver-xorg-input-libinput \
+         xserver-xorg-legacy xserver-xorg-video-fbdev)
+PYGOBJECT=(libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0)
+MISC=(librsvg2-common libopenjp2-7 libdbus-glib-1-dev autoconf python3-venv)
+OPTIONAL=(fonts-nanum fonts-ipafont libmpv-dev)
+
+########################################
+# Install Dependencies                 #
+########################################
+
+echo "Installing KlipperScreen dependencies ..."
+apt-get install --yes "${XSERVER[@]}" "${PYGOBJECT[@]}" "${MISC[@]}" "${OPTIONAL[@]}"
