@@ -20,7 +20,7 @@ source /files/00-config
 SRC_DIR="/home/${BASE_USER}/klipper"
 ENV_DIR="/home/${BASE_USER}/klippy-env"
 
-REPO="https://github.com/Klipper3d/klipper.git"
+REPO="https://github.com/pellcorp/kalico-rpi.git"
 
 DEPS=(git \
       # Packages for python cffi
@@ -89,7 +89,7 @@ echo "Installing NumPy in Virtualenv"
 
 # Normally klipper would use "numpy<1.26", but that version does not support
 # Python 3.13 which is now in Debian Trixie.
-sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install "numpy"
+sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install "numpy==2.2.2"
 
 ########################################
 # Return to saved directory            #
