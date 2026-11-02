@@ -1,0 +1,46 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+ENV_DIR="/home/${BASE_USER}/.KlipperScreen-env"
+
+DEPS=(xinit xinput x11-xserver-utils xserver-xorg-input-evdev \
+      xserver-xorg-input-libinput xserver-xorg-legacy xserver-xorg-video-fbdev \
+      libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0 \
+      librsvg2-common libopenjp2-7 libdbus-glib-1-dev autoconf python3-venv \
+      build-essential cmake libsystemd-dev \
+      fonts-nanum fonts-ipafont libmpv-dev)
+
+########################################
+# Install System Packages              #
+########################################
+
+apt-get install --yes "${DEPS[@]}"
+
+########################################
+# Create Virtualenv and install        #
+# dependencies                         #
+########################################
+
+echo "Creating Virtualenv (.KlipperScreen-env) ..."
+sudo -u "${BASE_USER}" python3 -m venv "${ENV_DIR}"
+echo "Installing Python Dependencies ..."
+sudo -u "${BASE_USER}" "${ENV_DIR}"/bin/pip install --prefer-binary \
+    "python-mpv==1.0.8" "jinja2>=3.1.6" "requests" "sdbus>=0.14.3" \
+    "sdbus_networkmanager>=2.0.0" "pycairo>=1.29.1" "websocket-client" \
+    "psutil>=7.2.2" "PyGObject<3.51"

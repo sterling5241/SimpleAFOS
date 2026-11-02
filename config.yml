@@ -4,7 +4,7 @@
   img_hash_url: "https://downloads.raspberrypi.org/raspios_lite_armhf_latest.sha256"
   env:
     ARCH: armv7l
-    IMAGE_ENLARGEROOT: 6000
+    IMAGE_ENLARGEROOT: 9000
     MOUNT_PROC: 1
     MOUNT_SYS: 1
     INIT_FORMAT: cloudinit-rpi
@@ -23,7 +23,7 @@
   img_hash_url: "https://downloads.raspberrypi.org/raspios_lite_arm64_latest.sha256"
   env:
     ARCH: arm64
-    IMAGE_ENLARGEROOT: 6000
+    IMAGE_ENLARGEROOT: 9000
     MOUNT_PROC: 1
     MOUNT_SYS: 1
     INIT_FORMAT: cloudinit-rpi

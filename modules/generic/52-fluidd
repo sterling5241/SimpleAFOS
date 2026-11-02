@@ -1,0 +1,37 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+DOWNLOAD_URL="https://github.com/fluidd-core/fluidd/releases/latest/download/fluidd.zip"
+DEPS=(wget unzip)
+
+########################################
+# Install System Packages              #
+########################################
+
+apt-get install --yes "${DEPS[@]}"
+
+########################################
+# Download Fluidd                      #
+########################################
+
+pushd "/home/${BASE_USER}" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" wget -q -O fluidd.zip "${DOWNLOAD_URL}"
+sudo -u "${BASE_USER}" unzip fluidd.zip -d /home/"${BASE_USER}"/fluidd
+rm /home/"${BASE_USER}"/fluidd.zip
+popd &> /dev/null || exit 1
